@@ -95,6 +95,15 @@ La aplicación estará accesible por defecto en `http://127.0.0.1:8000`.
 
 ---
 
+## 📚 Documentación Técnica
+
+Para conocer más detalles sobre la arquitectura y componentes del sistema, consulta la documentación dedicada:
+
+- 🗄️ [**Documentación de la Base de Datos (Modelos y Tablas)**](docs/database/README.md): Detalla la estructura del modelo entidad-relación (ERD), las tablas (`users`, `productos`, `inventarios`, `pedidos`, `detalle_pedidos`), restricciones y relaciones Eloquent.
+
+---
+
 ## 📝 Estado del Proyecto
 > ℹ️ **Nota:** Este proyecto se encuentra en etapa inicial de desarrollo. La documentación de la API y las instrucciones de configuración se irán actualizando a medida que se añadan nuevos módulos y funcionalidades.
+
 
