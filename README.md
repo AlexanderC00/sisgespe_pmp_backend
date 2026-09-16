@@ -1,59 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gestión y Pedidos de Productos Mínimamente Procesados (Backend)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositorio contiene la API backend desarrollada en **Laravel 12** para el **Sistema de Gestión y Pedidos de Productos Mínimamente Procesados (SISGESPE PMP)**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Requisitos Previos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Antes de comenzar, asegúrate de tener instalado en tu equipo lo siguiente:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **PHP** >= 8.2
+- **Composer** (gestor de dependencias de PHP)
+- **Node.js** & **NPM** (para gestión de assets/herramientas)
+- **Git**
+- Servidor de Base de Datos (MySQL, PostgreSQL o SQLite)
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🚀 Guía de Instalación y Configuración
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Sigue estos pasos detallados para clonar la aplicación y poner a funcionar el backend localmente:
 
-## Laravel Sponsors
+### 1. Clonar el Repositorio
+Abre tu terminal y ejecuta el comando para clonar este proyecto:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd sisgespe_pmp_backend
+```
 
-### Premium Partners
+### 2. Instalar Dependencias de PHP
+Ejecuta Composer para descargar todos los paquetes y dependencias del framework:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+composer install
+```
 
-## Contributing
+### 3. Instalar Dependencias de JavaScript
+Instala las dependencias necesarias de Node:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+npm install
+```
 
-## Code of Conduct
+### 4. Configurar el Archivo de Entorno (`.env`)
+Crea una copia del archivo de configuración `.env.example` y renómbralo a `.env`:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **En Linux / macOS / Git Bash:**
+  ```bash
+  cp .env.example .env
+  ```
+- **En Windows (CMD / PowerShell):**
+  ```powershell
+  copy .env.example .env
+  ```
 
-## Security Vulnerabilities
+Abre el archivo `.env` en tu editor de código y configura las credenciales de tu base de datos:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nombre_de_tu_bd
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
 
-## License
+### 5. Generar la Clave de la Aplicación (`APP_KEY`)
+Genera la clave de encriptación única de Laravel:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan key:generate
+```
+
+### 6. Ejecutar Migraciones de la Base de Datos
+Crea las tablas en la base de datos que configuraste:
+
+```bash
+php artisan migrate
+```
+
+*(Si se incluyen datos de prueba iniciales, puedes ejecutar también):*
+```bash
+php artisan db:seed
+```
+
+### 7. Iniciar el Servidor Local
+Levanta el servidor local de desarrollo de Laravel:
+
+```bash
+php artisan serve
+```
+
+La aplicación estará accesible por defecto en `http://127.0.0.1:8000`.
+
+---
+
+## 📝 Estado del Proyecto
+> ℹ️ **Nota:** Este proyecto se encuentra en etapa inicial de desarrollo. La documentación de la API y las instrucciones de configuración se irán actualizando a medida que se añadan nuevos módulos y funcionalidades.
+
