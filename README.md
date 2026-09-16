@@ -72,16 +72,11 @@ Genera la clave de encriptación única de Laravel:
 php artisan key:generate
 ```
 
-### 6. Ejecutar Migraciones de la Base de Datos
-Crea las tablas en la base de datos que configuraste:
+### 6. Ejecutar Migraciones y Seeders Iniciales
+Crea las tablas en la base de datos y puebla los datos iniciales de prueba (Usuarios Administrador/Cliente, Producto Chocho e Inventario inicial):
 
 ```bash
-php artisan migrate
-```
-
-*(Si se incluyen datos de prueba iniciales, puedes ejecutar también):*
-```bash
-php artisan db:seed
+php artisan migrate --seed
 ```
 
 ### 7. Iniciar el Servidor Local
@@ -91,19 +86,45 @@ Levanta el servidor local de desarrollo de Laravel:
 php artisan serve
 ```
 
-La aplicación estará accesible por defecto en `http://127.0.0.1:8000`.
+La API estará accesible en `http://127.0.0.1:8000`.
+
+---
+
+## 🌐 Endpoints de la API y Seguridad (RBAC & Sanctum)
+
+Todas las rutas excepto el registro e inicio de sesión requieren Token Bearer (`auth:sanctum`). Además, las operaciones de modificación del catálogo e inventario están protegidas con el middleware de rol `admin`.
+
+### 👤 Módulo `user` (`/api/user`)
+- `POST /api/user/register`: Registro público de usuarios (`name`, `email`, `password`, `rol`).
+- `POST /api/user/login`: Autenticación pública. Retorna el token Sanctum `Bearer`.
+- `POST /api/user/logout` *(Sanctum)*: Cierre de sesión y revocación del token.
+
+### 🥦 Módulo `producto` (`/api/producto`)
+- `GET /api/producto` *(Sanctum)*: Catálogo de productos con su stock disponible.
+- `POST /api/producto` *(Sanctum + Admin)*: Crear nuevo producto en catálogo.
+- `DELETE /api/producto/{id}` *(Sanctum + Admin)*: Eliminar producto. **Regla de negocio:** Se bloquea si tiene stock activo (>0) o pedidos asociados.
+
+### 📦 Módulo `inventario` (`/api/inventario`)
+- `GET /api/inventario` *(Sanctum + Admin)*: Consulta de existencias por producto.
+- `PUT /api/inventario/{id}` *(Sanctum + Admin)*: Actualizar stock (`cantidad_disponible`) y fecha de ingreso.
+
+### 🛒 Módulo `pedido` (`/api/pedido`)
+- `POST /api/pedido` *(Sanctum)*: Crear pedido. Valida y descuenta automáticamente el stock.
+- `GET /api/pedido` *(Sanctum)*: Aislamiento por usuario (los clientes solo ven sus propios pedidos; administradores ven todos).
+- `DELETE /api/pedido/{id}` *(Sanctum)*: Eliminar/cancelar pedido propio y restaurar stock.
+
+---
+
+## 🎯 Alcance del MVP y Justificación Académica
+
+Este MVP inicial se diseñó enfocado en demostrar el dominio de los pilares fundamentales de **Laravel 12**:
+
+1. **Seguridad y Control de Acceso Basado en Roles (RBAC):** Middleware personalizado `EnsureIsAdmin` combinado con Sanctum Tokens y aislamiento de visibilidad de datos.
+2. **Integridad de Datos y Transacciones Atómicas:** Operaciones relacionales en bloque (`DB::transaction`), restricciones `ON DELETE` e inmutabilidad de precios históricos.
+3. **Arquitectura Limpia:** Separación de responsabilidades con **Form Requests** para validación, **API Resources** para formateo de respuestas JSON y **Controladores** limpios.
 
 ---
 
 ## 📚 Documentación Técnica
 
-Para conocer más detalles sobre la arquitectura y componentes del sistema, consulta la documentación dedicada:
-
-- 🗄️ [**Documentación de la Base de Datos (Modelos y Tablas)**](docs/database/README.md): Detalla la estructura del modelo entidad-relación (ERD), las tablas (`users`, `productos`, `inventarios`, `pedidos`, `detalle_pedidos`), restricciones y relaciones Eloquent.
-
----
-
-## 📝 Estado del Proyecto
-> ℹ️ **Nota:** Este proyecto se encuentra en etapa inicial de desarrollo. La documentación de la API y las instrucciones de configuración se irán actualizando a medida que se añadan nuevos módulos y funcionalidades.
-
-
+- 🗄️ [**Documentación de la Base de Datos (Modelos, ERD y Tablas)**](docs/database/README.md): Detalla la estructura del modelo entidad-relación, restricciones y relaciones Eloquent.
