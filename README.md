@@ -24,7 +24,7 @@ Sigue estos pasos detallados para clonar la aplicación y poner a funcionar el b
 Abre tu terminal y ejecuta el comando para clonar este proyecto:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
+git clone https://github.com/AlexanderC00/sisgespe_pmp_backend.git
 cd sisgespe_pmp_backend
 ```
 
